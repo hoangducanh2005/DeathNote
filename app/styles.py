@@ -2,7 +2,8 @@ DEATHNOTE_CSS = """
 <style>
     body {
         background:
-            radial-gradient(circle at top, #2b0000 0%, #050505 35%, #000000 100%);
+            linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
+            url('/res/light-yagami-black-anime-2zplmoceytxd85kl.jpg') center/cover no-repeat fixed;
         color: #e8dcc0;
     }
 

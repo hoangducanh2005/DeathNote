@@ -1,7 +1,8 @@
 import os
-from nicegui import ui
+from nicegui import app, ui
 from app.ui_page import DeathNotePage
 
+app.add_static_files("/res", "app/res")
 
 page = DeathNotePage()
 page.create()
