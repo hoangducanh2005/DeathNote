@@ -1,8 +1,14 @@
 import os
-from nicegui import ui
+from pathlib import Path
+from nicegui import ui, app as nicegui_app
 from app.ui_page import DeathNotePage
 
-ui.add_static_files("/res", "app/res")
+BASE_DIR = Path(__file__).parent
+
+nicegui_app.add_static_files(
+    "/res",
+    BASE_DIR / "app" / "res"
+)
 
 page = DeathNotePage()
 page.create()
