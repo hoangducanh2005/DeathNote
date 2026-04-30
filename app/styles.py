@@ -1,9 +1,9 @@
 DEATHNOTE_CSS = """
 <style>
-    body {
+    html, body, #q-app, .q-layout, .q-page-container, .q-page {
         background:
             linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
-            url('/res/light-yagami-black-anime-2zplmoceytxd85kl.jpg') center/cover no-repeat fixed;
+            url('/res/light-yagami-black-anime-2zplmoceytxd85kl.jpg') center/cover no-repeat fixed !important;
         color: #e8dcc0;
     }
 

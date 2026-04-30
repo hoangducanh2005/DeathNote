@@ -1,5 +1,6 @@
 from nicegui import ui
 from datetime import datetime
+import time
 from uuid import uuid4
 
 from app.storage import load_notes, save_notes
@@ -9,6 +10,7 @@ from app.styles import DEATHNOTE_CSS
 class DeathNotePage:
     def __init__(self):
         self.notes = load_notes()
+        self.ensure_note_timestamps()
 
         self.note_input = None
         self.counter_label = None
@@ -16,6 +18,16 @@ class DeathNotePage:
         self.delete_dialog = None
 
         self.selected_note_id = None
+
+    def ensure_note_timestamps(self):
+        changed = False
+        now_ts = time.time()
+        for note in self.notes:
+            if "created_at_ts" not in note:
+                note["created_at_ts"] = now_ts
+                changed = True
+        if changed:
+            save_notes(self.notes)
 
     def create(self):
         ui.page_title("DeathNote")
@@ -61,6 +73,7 @@ class DeathNotePage:
 
         self.update_counter()
         self.render_notes()
+        ui.timer(1.0, self.render_notes)
 
     def update_counter(self):
         self.counter_label.set_text(f"{len(self.notes)} page(s) written")
@@ -80,7 +93,8 @@ class DeathNotePage:
         new_note = {
             "id": str(uuid4()),
             "content": content,
-            "created_at": datetime.now().strftime("%d/%m/%Y %H:%M")
+            "created_at": datetime.now().strftime("%d/%m/%Y %H:%M"),
+            "created_at_ts": time.time(),
         }
 
         self.notes.insert(0, new_note)
@@ -119,6 +133,17 @@ class DeathNotePage:
                     ui.separator().classes("my-3")
 
                     ui.label(note["content"]).classes("note-content")
+
+                    if self.is_dead(note):
+                        with ui.row().classes("gap-2 mt-3"):
+                            ui.label("đã chết").classes("text-white bg-red-800 px-2 py-1 rounded text-xs")
+                            ui.label("heart attack").classes("text-white bg-black px-2 py-1 rounded text-xs")
+
+    def is_dead(self, note):
+        created_at_ts = note.get("created_at_ts")
+        if created_at_ts is None:
+            return False
+        return (time.time() - float(created_at_ts)) >= 40
 
     def request_delete(self, note_id):
         self.selected_note_id = note_id
