@@ -136,8 +136,8 @@ class DeathNotePage:
 
                     if self.is_dead(note):
                         with ui.row().classes("gap-2 mt-3"):
-                            ui.label("đã chết").classes("text-white bg-red-800 px-2 py-1 rounded text-xs")
-                            ui.label("heart attack").classes("text-white bg-black px-2 py-1 rounded text-xs")
+                            ui.label("DIED").classes("text-white bg-red-800 px-2 py-1 rounded text-xs")
+                            ui.label("HEART ATTACK").classes("text-white bg-black px-2 py-1 rounded text-xs")
 
     def is_dead(self, note):
         created_at_ts = note.get("created_at_ts")
